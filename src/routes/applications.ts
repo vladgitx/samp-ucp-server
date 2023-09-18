@@ -13,23 +13,23 @@ router.post("/submit", async (req, res) => {
     const { email, answers }: { email: string, answers: ApplicationAnswer[] } = req.body
 
     if (typeof email !== "string" || !email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-        return res.status(400).json(false)
+        return res.status(400).json({ success: false, message: "Acel email este invalid." })
     }
     if (answers === undefined || answers.length === 0) {
-        return res.status(400).json(false)
+        return res.status(400).json({ success: false, message: "Raspunsurile tale la intrebari nu au fost gasite." })
     }
     for (let i = 0; i < answers.length; i++) {
         if (typeof answers[i].question !== "string" || typeof answers[i].answer !== "string") {
-            return res.status(400).json(false)
+            return res.status(400).json({ success: false, message: "Ceva a mers prost in procesarea raspunsurilor de la intrebari." })
         }
     }
 
     const inserted = await insertApplicationInDb(email, answers)
     if (!inserted) {
-        return res.status(500).json(false)
+        return res.status(500).json({ success: false, message: "Aplicatia ta nu a putut fi trimisa." })
     }
   
-    res.status(200).json(true)
+    res.status(200).json({ success: true })
 })
 
 router.get("/all", async (req, res) => {
@@ -71,13 +71,13 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     const application = await getApplicationFromDb(parseInt(req.params.id))
-    res.status(200).json(application || "Could not find the application!")
+    res.status(200).json(application)
 })
 
 router.delete("/:id", async (req, res) => {
     const deleted = await deleteApplicationFromDb(parseInt(req.params.id))
     if (!deleted) {
-        return res.status(200).json(false)
+        return res.status(200).json({ success: false, message: "Acel cont nu exista in baza de date." })
     }
-    res.status(200).json(true)
+    res.status(200).json({ success: true })
 })
