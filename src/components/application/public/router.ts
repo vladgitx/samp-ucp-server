@@ -1,11 +1,11 @@
 import express from "express"
+import { ApplicationAnswer } from "./types"
 import {
-    ApplicationAnswer,
     deleteApplicationFromDb,
     getAllApplications,
     getApplicationFromDb,
     insertApplicationInDb
-} from "../components/application"
+} from "../data/orm"
 
 export const router = express.Router()
 

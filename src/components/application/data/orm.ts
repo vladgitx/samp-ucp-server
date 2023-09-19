@@ -1,4 +1,4 @@
-import { pool } from "../../database"
+import { pool } from "../../.."
 import { Application, ApplicationAnswer } from "../public/types"
 
 export async function insertApplicationInDb(email: string, answers: ApplicationAnswer[]) {
