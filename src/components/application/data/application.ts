@@ -1,5 +1,6 @@
 import { pool } from "../../.."
-import { Application, ApplicationAnswer } from "../public/types"
+import { ApplicationAnswer } from "../types/answer"
+import { Application } from "../types/application"
 
 export async function insertApplicationInDb(email: string, answers: ApplicationAnswer[]) {
     const client = await pool.connect()
