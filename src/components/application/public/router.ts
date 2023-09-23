@@ -73,21 +73,22 @@ router.get("/answered", async (req, res) => {
 })
 
 router
-    .get("/:id", async (req, res) => {
+    .route("/:id")
+    .get(async (req, res) => {
         const application = await getApplicationFromDb(parseInt(req.params.id))
         if (!application) {
             return res.status(404).json({ error: "Aplicatia nu a fost gasita." })
         }
         res.status(200).json(application)
     })
-    .delete("/:id", async (req, res) => {
+    .delete(async (req, res) => {
         const deleted = await deleteApplicationFromDb(parseInt(req.params.id))
         if (!deleted) {
             return res.status(404).json({ error: "Aplicatia nu a fost gasita." })
         }
         res.status(200)
     })
-    .patch("/:id", async (req, res) => {
+    .patch(async (req, res) => {
         const { response } = req.query
 
         if (response !== "accepted" && response !== "rejected") {
