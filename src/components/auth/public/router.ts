@@ -64,7 +64,7 @@ router.delete("/logout", isAuthenticated, async (req, res) => {
         if (error) {
             res.status(500).json({ error: "Ceva a mers prost." })
         } else {
-            res.status(204).send()
+            res.status(204)
         }
     })
 })

@@ -33,7 +33,7 @@ router.post("/submit", async (req, res) => {
         return res.status(500).json({ error: "Aplicatia ta nu a putut fi trimisa." })
     }
   
-    res.status(204)
+    res.status(200)
 })
 
 router.get("/all", async (req, res) => {
@@ -83,9 +83,9 @@ router
     .delete("/:id", async (req, res) => {
         const deleted = await deleteApplicationFromDb(parseInt(req.params.id))
         if (!deleted) {
-            return res.status(404).json({ error: "Acel cont nu exista in baza de date." })
+            return res.status(404).json({ error: "Aplicatia nu a fost gasita." })
         }
-        res.status(200).json({ success: true })
+        res.status(200)
     })
     .patch("/:id", async (req, res) => {
         const { response } = req.query
@@ -96,7 +96,7 @@ router
 
         const application = await updateApplicationStatusInDb(parseInt(req.params.id), response)
         if (!application) {
-            return res.status(304).json({ error: "Aplicatia nu a fost gasita." })
+            return res.status(404).json({ error: "Aplicatia nu a fost gasita." })
         }
         
         res.status(200).json(application)
