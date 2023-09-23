@@ -72,33 +72,32 @@ router.get("/answered", async (req, res) => {
     res.status(200).json(applications)
 })
 
-router.get("/:id", async (req, res) => {
-    const application = await getApplicationFromDb(parseInt(req.params.id))
-    if (!application) {
-        return res.status(404).json({ error: "Aplicatia nu a fost gasita." })
-    }
-    res.status(200).json(application)
-})
+router
+    .get("/:id", async (req, res) => {
+        const application = await getApplicationFromDb(parseInt(req.params.id))
+        if (!application) {
+            return res.status(404).json({ error: "Aplicatia nu a fost gasita." })
+        }
+        res.status(200).json(application)
+    })
+    .delete("/:id", async (req, res) => {
+        const deleted = await deleteApplicationFromDb(parseInt(req.params.id))
+        if (!deleted) {
+            return res.status(404).json({ error: "Acel cont nu exista in baza de date." })
+        }
+        res.status(200).json({ success: true })
+    })
+    .patch("/:id", async (req, res) => {
+        const { response } = req.query
 
-router.delete("/:id", async (req, res) => {
-    const deleted = await deleteApplicationFromDb(parseInt(req.params.id))
-    if (!deleted) {
-        return res.status(404).json({ error: "Acel cont nu exista in baza de date." })
-    }
-    res.status(200).json({ success: true })
-})
+        if (response !== "accepted" && response !== "rejected") {
+            return res.status(400).json({ error: "Invalid query, it only accepts \"accepted\" and \"rejected\"." })
+        }
 
-router.patch("/:id", async (req, res) => {
-    const { response } = req.query
-
-    if (response !== "accepted" && response !== "rejected") {
-        return res.status(400).json({ error: "Invalid query, it only accepts \"accepted\" and \"rejected\"." })
-    }
-
-    const application = await updateApplicationStatusInDb(parseInt(req.params.id), response)
-    if (!application) {
-        return res.status(304).json({ error: "Aplicatia nu a fost gasita." })
-    }
-    
-    res.status(200).json(application)
-})
+        const application = await updateApplicationStatusInDb(parseInt(req.params.id), response)
+        if (!application) {
+            return res.status(304).json({ error: "Aplicatia nu a fost gasita." })
+        }
+        
+        res.status(200).json(application)
+    })
