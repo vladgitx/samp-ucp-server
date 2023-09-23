@@ -5,4 +5,3 @@ declare module "express-session" {
 }
 
 export { router as authRouter } from "./public/router"
-export { isAuthenticated, isNotAuthenticated } from "./public/middleware"

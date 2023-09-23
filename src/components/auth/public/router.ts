@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs"
 import express from "express"
-import { getAccountLoginInfo, insertAccountToDb } from "../data/account"
+import { getAccountLoginInfo, insertAccountToDb } from "../data"
 import { isAuthenticated, isNotAuthenticated } from "./middleware"
 import { appConfig } from "../../../common/config"
 

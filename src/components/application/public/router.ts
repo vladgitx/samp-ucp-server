@@ -1,5 +1,5 @@
 import express from "express"
-import { ApplicationAnswer } from "../types/answer"
+import { ApplicationAnswer } from "../types"
 import {
     deleteApplicationFromDb,
     getAllApplications,
@@ -8,7 +8,7 @@ import {
     getApplicationFromDb,
     insertApplicationInDb,
     updateApplicationStatusInDb
-} from "../data/application"
+} from "../data"
 import { validateLimitAndSkip } from "../utils/validate-limit-skip"
 
 export const router = express.Router()

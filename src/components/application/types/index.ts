@@ -4,3 +4,8 @@ export type Application = {
     date: Date
     status: "pending" | "accepted" | "rejected"
 }
+
+export type ApplicationAnswer = {
+    question: string
+    answer: string
+}
